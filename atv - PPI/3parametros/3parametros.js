@@ -1,51 +1,44 @@
+// Função para adicionar uma palavra em determinados índices de uma frase
 function adicionarPalavra(frase, palavra, indices) {
-    // Converte a string de índices para uma array de números
-    var listaIndices = indices.split(",").map(function(indice) {
-      return parseInt(indice.trim());
-    });
-  
-    // Inicializa o contador de caracteres
-    var contador = 0;
-  
-    // Verifica se os índices estão dentro dos limites da frase
-    if (Math.max(...listaIndices) > frase.length) {
-      return "algum índice digitado não existe nesta frase";
+  // Converte a string de índices para um array de números
+  var listaIndices = indices.split(",").map(Number);
+
+  // Variável para armazenar a nova frase
+  var novaFrase = "";
+
+  // Percorre cada caractere da frase
+  for (var i = 0; i < frase.length; i++) {
+    // Verifica se o índice atual está na lista de índices
+    if (listaIndices.includes(i)) {
+      // Se sim, adiciona a palavra à nova frase
+      novaFrase += palavra;
     }
-  
-    // Itera pelos caracteres da frase e adiciona a palavra nos índices indicados
-    var novaFrase = "";
-    for (var i = 0; i < frase.length; i++) {
-      // Verifica se o contador está em um dos índices indicados
-      if (listaIndices.includes(contador)) {
-        novaFrase += palavra;
-      }
-      novaFrase += frase[i];
-  
-      // Incrementa o contador de caracteres
-      contador++;
-  
-      // Verifica se o caractere atual é um espaço em branco
-      if (frase[i] === " ") {
-        // Adiciona a palavra nos índices após o espaço em branco, exceto se o índice anterior já tiver sido adicionado
-        if (listaIndices.includes(contador) && !listaIndices.includes(contador - 1)) {
-          novaFrase += palavra;
-        }
-      }
-    }
-  
-    // Retorna a nova frase
-    return novaFrase;
+
+    // Adiciona o caractere atual da frase à nova frase
+    novaFrase += frase[i];
   }
-  
-  function gerarSaida() {
-    // Obtém os valores dos campos de entrada
-    var frase = document.getElementById("fraseInput").value;
-    var palavra = document.getElementById("palavraInput").value;
-    var indices = document.getElementById("indicesInput").value;
-  
-    // Chama a função para gerar a saída
-    var saida = adicionarPalavra(frase, palavra, indices);
-  
-    // Atualiza o elemento de saída
-    document.getElementById("saida").textContent = "Saída: " + saida;
+
+  // Verifica se o índice 0 está na lista de índices
+  if (listaIndices.includes(0)) {
+    // Se sim, adiciona a palavra antes da nova frase,
+    // removendo a primeira ocorrência da palavra na nova frase
+    novaFrase = palavra + novaFrase.substr(palavra.length);
   }
+
+  // Retorna a nova frase resultante
+  return novaFrase;
+}
+
+// Função para gerar a saída na página HTML
+function gerarSaida() {
+  // Obtém os valores dos campos de entrada
+  var frase = document.getElementById("fraseInput").value;
+  var palavra = document.getElementById("palavraInput").value;
+  var indices = document.getElementById("indicesInput").value;
+
+  // Chama a função para adicionar a palavra na frase
+  var saida = adicionarPalavra(frase, palavra, indices);
+
+  // Atualiza o elemento de saída na página HTML
+  document.getElementById("saida").textContent = "Saída: " + saida;
+}
