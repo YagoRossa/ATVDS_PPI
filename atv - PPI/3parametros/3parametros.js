@@ -9,7 +9,7 @@ function adicionarPalavra(frase, palavra, indices) {
   
     // Verifica se os índices estão dentro dos limites da frase
     if (Math.max(...listaIndices) > frase.length) {
-      return "Erro: índice fora dos limites da frase.";
+      return "algum índice digitado não existe nesta frase";
     }
   
     // Itera pelos caracteres da frase e adiciona a palavra nos índices indicados
