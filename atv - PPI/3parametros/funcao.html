@@ -1,0 +1,19 @@
+<script>
+    function insertString(str,toInsert, index) {
+        const charArray = str.split("");
+        let inserCount = 0;
+
+        for(let i = 0; i <= str.length; i++){
+            // console.log(str[i])
+            if(index.includes(i)){
+                charArray.splice(i + inserCount, 0, toInsert);
+                inserCount++;
+
+            }
+        }
+        return charArray.join("");
+    }
+
+    console.log(insertString("O julio esta maluco","de", [1,3,8]))
+
+</script>
